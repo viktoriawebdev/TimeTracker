@@ -38,7 +38,7 @@ function deleteTime(id) {
 }
 
 function editTime(timer) {
-    editProject.value = timer.project
+    editProject.value = timer.project.id
     editStart.value = timer.start
     editEnd.value = timer.end
     editTimer.value = timer
@@ -46,12 +46,10 @@ function editTime(timer) {
 
 function submitTimeLog(timer) {
     axios.put('/time-logs/' + timer.id, {
-        'project': editProject.value.id,
+        'project': editProject.value,
         'start': editStart.value,
         'end': editEnd.value
     }).then((res) => {
-        if(res.message)
-            alert(res.message)
         console.log(res)
     })
 }

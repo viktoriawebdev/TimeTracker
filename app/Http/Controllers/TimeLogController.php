@@ -34,10 +34,7 @@ class TimeLogController extends Controller
     public function store(Request $request)
     {
         $project = Project::findOrFail($request->input('project'));
-        $data = [
-            'start' => Carbon::now()
-        ];
-        $logEntry = new TimeLog($data);
+        $logEntry = new TimeLog(['start' => Carbon::now()]);
         $logEntry->project()->associate($project);
         $logEntry->user()->associate(Auth::user());
         $logEntry->save();
@@ -54,7 +51,10 @@ class TimeLogController extends Controller
     {
         $validated = $request->validated();
 
-        return $time_log->fill($validated)->save();
+        $time_log->fill($validated);
+        $time_log->project()->associate($request->get('project'));
+        $time_log->save();
+
         return [
             'success' => true
         ];
@@ -67,6 +67,7 @@ class TimeLogController extends Controller
     {
         $time_log->end = Carbon::now();
         $time_log->save();
+
         return [
             'success' => true
         ];

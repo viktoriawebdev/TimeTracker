@@ -19,7 +19,7 @@ class TimeLogFactory extends Factory
     public function definition(): array
     {
         $start_time = fake()->dateTimeThisYear();
-        $end_time = strtotime('+1 Hour', $start_time->getTimestamp());;
+        $end_time = strtotime('+'.rand(1,100).' Minutes', $start_time->getTimestamp());
         return [
             'start' => $start_time,
             'end' => date('Y-m-d H:i:s', $end_time),

@@ -21,4 +21,15 @@ class Project extends Model
     {
         return $this->hasMany(TimeLog::class);
     }
+
+    public static function getWithTimeLogs()
+    {
+        return self::with('timeLog')->get()->map(
+            function ($project) {
+                $project['time'] = $project['timeLog']->sum('time_spent');
+                unset($project['timeLog']);
+                return $project;
+            }
+        );
+    }
 }

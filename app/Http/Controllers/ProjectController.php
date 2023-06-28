@@ -13,10 +13,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = sum_of_time_per_project(Project::with('timeLog')->get());
-        return Inertia::render('Projects', [
-            'projects' => $projects,
-        ]);
+        $projects = Project::getWithTimeLogs();
+        return Inertia::render('Projects', compact('projects'));
     }
 
     /**

@@ -25,7 +25,7 @@ class TimeLogRequest extends FormRequest
         return [
             'start' => 'required|date_format:Y-m-d H:i:s',
             'end' => 'date_format:Y-m-d H:i:s|after:start',
-            'project' => 'integer',
+            'project' => 'required|integer'
         ];
     }
 }
